@@ -8,6 +8,15 @@
             <li class="mr-6">
                 <a class="text-blue-500 hover:text-blue-800" href="{{ route('createStatMetall') }}">Статистика</a>
             </li>
+            <li class="mr-6">
+                <a class="text-blue-500 hover:text-blue-800" href="{{ route('createStatMetallCategories') }}">Статистика по категориям</a>
+            </li>
+            <li class="mr-6">
+                <a class="text-blue-500 hover:text-blue-800" href="{{ route('storeRecalculateRemains') }}">Показать остатки с учетом переброски</a>
+            </li>
+            <li class="mr-6">
+                <a class="text-blue-500 hover:text-blue-800" href="{{ route('createStatTransfer') }}">Показать статистику переброски</a>
+            </li>
         </ul>
 
     </div>

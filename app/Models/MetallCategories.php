@@ -28,4 +28,12 @@ class MetallCategories extends Model
         return $this->hasOne(Remain::class);
     }
 
+    public function fromCategoriesId(){
+        return $this->hasMany(TransferMetall::class, 'from_categories_id');
+    }
+
+    public function inCategoriesId(){
+        return $this->hasMany(TransferMetall::class, 'in_categories_id');
+    }
+
 }

@@ -24,3 +24,11 @@ Route::match(['get', 'post'],'stat-metall', [MetallController::class, 'createSta
 Route::post('stat-metall', [MetallController::class, 'storeStatMetall'])->name('storeStatMetall');
 
 Route::match(['get', 'post'], 'stat-metall/categories', [MetallController::class, 'createStatMetallCategories'])->name('createStatMetallCategories');
+Route::get('categories-metall', [MetallController::class, 'createGetAllCategories'])->name('createGetAllCategories');
+Route::post('categories-metall', [MetallController::class, 'storeUpdateCategories'])->name('storeUpdateCategories');
+Route::get('recycle-metal', [MetallController::class, 'createRecycleMetall'])->name('createRecycleMetall');
+// перекидываем металл с одной категории в другую
+Route::post('recycle-metal', [MetallController::class, 'storeRecycleMetall'])->name('storeRecycleMetall');
+// персчитываем остатки
+Route::get('recalculate-metal', [MetallController::class, 'storeRecalculateRemains'])->name('storeRecalculateRemains');
+Route::get('stat-transfer-metal', [MetallController::class, 'createStatTransfer'])->name('createStatTransfer');

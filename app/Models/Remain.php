@@ -9,7 +9,7 @@ class Remain extends Model
 {
 
     protected $fillable = [
-        'type_metall_id',
+        'metall_types_id',
         'metall_categories_id',
         'remains'
     ];
@@ -19,7 +19,7 @@ class Remain extends Model
         return $this->belongsTo(MetallType::class);
     }
 
-    public function metallCategorie(){
+    public function metallCategories(){
         return $this->belongsTo(MetallCategories::class);
     }
 
