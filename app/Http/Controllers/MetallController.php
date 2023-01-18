@@ -383,9 +383,19 @@ class MetallController extends Controller
                         $remains_array[$i]['remains'] -= $item_metall->massa;
                     }
                 }
-                Remain::where('metall_categories_id', $item_r['categorie_id'])->update([
-                    'remains' => $remains_array[$i]['remains'],
-                ]);
+//                dd($remains_array[$i]['remains']);
+                $remaint_item = Remain::where('metall_categories_id', $item_r['categorie_id'])->first();
+                if ($remaint_item == null){
+                    Remain::create([
+                        'metall_types_id' => $remains_array[$i]['type_id'],
+                        'metall_categories_id' => $remains_array[$i]['categorie_id'],
+                        'remains' => 0
+                    ]);
+                }else{
+                    $remaint_item->update([
+                        'remains' => $remains_array[$i]['remains'],
+                    ]);
+                }
             }
         }
         return view('dashboard.recycle-metal', compact('remains'));
