@@ -83,7 +83,7 @@
                         </tr>
                     @endforeach
                 </table>
-                <form class="mt-6" action="{{ route('storeRecalculateRemains') }}">
+                <form class="mt-6" action="{{ route('storeRecalculateRemains') }}" method="post">
                     @csrf
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1.5 px-4 ml-4 rounded focus:outline-none focus:shadow-outline"
                             id="recycle_calceulate_btn"

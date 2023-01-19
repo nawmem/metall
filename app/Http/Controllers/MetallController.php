@@ -358,9 +358,15 @@ class MetallController extends Controller
         return redirect()->back();
     }
 
+    public function createRecalculateRemains(Request $request){
+
+        $all_categories = MetallCategories::all();
+        $remains = Remain::all();
+        return view('dashboard.recycle-metal', compact('remains', 'all_categories'));
+    }
+
     // показываем остатки и пересчитываем металл по нажатию на кнопку
     public function storeRecalculateRemains(Request $request){ // получаем все данные по таблице категории
-        $all_categories = MetallCategories::all();
 
         if ($request->is_reset == 3){
             $categories = MetallCategories::all();
@@ -382,7 +388,7 @@ class MetallController extends Controller
                         $remains_array[$i]['remains'] -= $item_metall->massa;
                     }
                 }
-//                dd($remains_array[$i]['remains']);
+
                 $remaint_item = Remain::where('metall_categories_id', $item_r['categorie_id'])->first();
                 if ($remaint_item == null){
                     Remain::create([
@@ -399,8 +405,7 @@ class MetallController extends Controller
                 }
             }
         }
-        $remains = Remain::all();
-        return view('dashboard.recycle-metal', compact('remains', 'all_categories'));
+        return redirect()->back();
     }
     // статистика по оперциям переброски металла
     public function createStatTransfer(Request $request){

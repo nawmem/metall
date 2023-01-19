@@ -30,5 +30,7 @@ Route::get('recycle-metal', [MetallController::class, 'createRecycleMetall'])->n
 // перекидываем металл с одной категории в другую
 Route::post('recycle-metal', [MetallController::class, 'storeRecycleMetall'])->name('storeRecycleMetall');
 // персчитываем остатки
-Route::get('recalculate-metal', [MetallController::class, 'storeRecalculateRemains'])->name('storeRecalculateRemains');
+Route::get('recalculate-metal', [MetallController::class, 'createRecalculateRemains'])->name('createRecalculateRemains');
+Route::post('recalculate-metal', [MetallController::class, 'storeRecalculateRemains'])->name('storeRecalculateRemains');
+
 Route::get('stat-transfer-metal', [MetallController::class, 'createStatTransfer'])->name('createStatTransfer');
