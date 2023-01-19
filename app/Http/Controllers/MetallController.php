@@ -206,8 +206,6 @@ class MetallController extends Controller
         $result_ship = [];
         $by_date = '';
         $before_date = '';
-        // получаем все данные по таблице категории
-        $all_categories = MetallCategories::all();
         // итоговые суммы по всем метелам
         $total_accept_p = 0;
         $total_ship_p = 0;
@@ -314,7 +312,8 @@ class MetallController extends Controller
         foreach ($result_ship as $total_ship){
             $total_ship_p += $total_ship['price_all']; // суммируем цену общую
         }
-        return view('dashboard.state', compact('is_categories', 'result_accept', 'result_ship', 'total_accept_p', 'total_ship_p', 'all_categories'));
+
+        return view('dashboard.state', compact('is_categories', 'result_accept', 'result_ship', 'total_accept_p', 'total_ship_p'));
     }
 
     // показываем категории металла
@@ -350,10 +349,9 @@ class MetallController extends Controller
         $remains_in->update([
             'remains' => $remains_in_mass
         ]);
-
         TransferMetall::create([
-            'from_categories_id' => $remains_from->id,
-            'in_categories_id' => $remains_in->id,
+            'from_categories_id' => $remains_from->metallCategories->id,
+            'in_categories_id' => $remains_in->metallCategories->id,
             'massa' => $recycle_mass
         ]);
 
@@ -361,8 +359,9 @@ class MetallController extends Controller
     }
 
     // показываем остатки и пересчитываем металл по нажатию на кнопку
-    public function storeRecalculateRemains(Request $request){
-        $remains = Remain::all();
+    public function storeRecalculateRemains(Request $request){ // получаем все данные по таблице категории
+        $all_categories = MetallCategories::all();
+
         if ($request->is_reset == 3){
             $categories = MetallCategories::all();
             $remains_array = [];
@@ -391,14 +390,17 @@ class MetallController extends Controller
                         'metall_categories_id' => $remains_array[$i]['categorie_id'],
                         'remains' => 0
                     ]);
-                }else{
+                }
+                $remaint_item = Remain::where('metall_categories_id', $item_r['categorie_id'])->first();
+                if ($remaint_item != null){
                     $remaint_item->update([
                         'remains' => $remains_array[$i]['remains'],
                     ]);
                 }
             }
         }
-        return view('dashboard.recycle-metal', compact('remains'));
+        $remains = Remain::all();
+        return view('dashboard.recycle-metal', compact('remains', 'all_categories'));
     }
     // статистика по оперциям переброски металла
     public function createStatTransfer(Request $request){
