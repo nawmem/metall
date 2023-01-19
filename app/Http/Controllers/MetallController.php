@@ -57,12 +57,13 @@ class MetallController extends Controller
         $remains = Remain::where('metall_categories_id', $categorie_id)->first();
         if ($remains == null){
             Remain::create([
-                'matall_types_id' => $metall_type,
+                'metall_types_id' => $metall_type,
                 'metall_categories_id' => $categorie_id,
                 'remains' => 0
             ]);
-        }else{
-//            dd($metall_type);
+        }
+        $remains = Remain::where('metall_categories_id', $categorie_id)->first();
+        if ($remains != null){
             $result_remains = $remains->remains + $mass;
             $remains->update([
                 'metall_types_id' => $metall_type,
@@ -114,7 +115,9 @@ class MetallController extends Controller
                 'metall_categories_id' => $categorie_id,
                 'remains' => 0
             ]);
-        }else{
+        }
+        $remains = Remain::where('metall_categories_id', $categorie_id)->first();
+        if ($remains != null){
             $result_remains = $remains->remains - $mass;
             $remains->update([
                 'metall_types_id' => $metall_type,
