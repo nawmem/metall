@@ -35,7 +35,6 @@ class MetallController extends Controller
 
     // принимаем металл
     public function acceptMetal(Request $request){
-        $result_price = 0;
         $categorie = MetallCategories::where('id', $request->name_categorie)->first();
         $event = 'accept'; // название события
         $price_one = $categorie->price; // цена за кг
@@ -44,15 +43,18 @@ class MetallController extends Controller
         $metall_type = $categorie->metalltypes->id; // ИД типа металла
         $categorie_id = $categorie->id; // ИД категории
         // смотрим если нет засора
-        if ($blockage == (null || 0)){
-            $blockage = 0;
-            // то считаем без него
-            $price_all = (int)floor($mass * $price_one);
-        }else{
-            // считаем с засором
-            $price_all = (int)floor(($mass - ($mass*($blockage/100)))*$price_one);
+        if($request->is_save == 'on'){
+            $price_all = $request->price_all;
+        }else {
+            if ($blockage == (null || 0)) {
+                $blockage = 0;
+                // то считаем без него
+                $price_all = (int)floor($mass * $price_one);
+            } else {
+                // считаем с засором
+                $price_all = (int)floor(($mass - ($mass * ($blockage / 100))) * $price_one);
+            }
         }
-
         // берем таблицу остатки и прибавляем принятый металл к остаткам
         $remains = Remain::where('metall_categories_id', $categorie_id)->first();
         if ($remains == null){
@@ -88,7 +90,6 @@ class MetallController extends Controller
 
     // отгружаем металл
     public function shipMetall(Request $request){
-        $result_price = 0;
         $categorie = MetallCategories::where('id', $request->name_categorie_ship)->first();
         $event = 'ship';
         $price_one = $request->price_one_ship;

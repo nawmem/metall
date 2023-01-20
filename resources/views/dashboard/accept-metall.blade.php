@@ -58,7 +58,11 @@
                    placeholder="">
             <p class="text-gray-600 text-xs italic">Итоговая сумма</p>
         </div>
+        <div class="w-full md:w-1/3 px-3">
+            <input class="w-5 h-5 " type="checkbox" name="is_save">
 
+            <p class="text-gray-600 text-xs italic">Сохранить эту сумму</p>
+        </div>
     </div>
     <div class="flex items-center justify-between">
         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
