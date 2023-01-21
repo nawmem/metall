@@ -39,7 +39,7 @@ class MetallController extends Controller
         $event = 'accept'; // название события
         $price_one = $categorie->price; // цена за кг
         $mass = $request->mass;// масса
-        $blockage = $request->blockage; // засор
+        $blockage = $request->blockage || 0; // засор
         $metall_type = $categorie->metalltypes->id; // ИД типа металла
         $categorie_id = $categorie->id; // ИД категории
         // смотрим если нет засора
@@ -73,7 +73,7 @@ class MetallController extends Controller
                 'remains' => $result_remains
             ]);
         }
-
+        dd($blockage);
         // сохраняем в бд
         Metall::create([
             "event" =>$event,
